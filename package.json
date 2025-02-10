@@ -1,0 +1,23 @@
+{
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "start": "export NODE_ENV=development && webpack serve --open",
+    "build": "export $(grep -v '^#' .env | xargs) && export NODE_ENV=production && webpack && node ./measureHTMLs.js"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.8",
+    "@webgpu/types": "^0.1.54",
+    "html-webpack-plugin": "^5.6.3",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "webpack": "^5.97.1",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  },
+  "dependencies": {
+    "@wasm-tool/wasm-pack-plugin": "^1.7.0"
+  }
+}

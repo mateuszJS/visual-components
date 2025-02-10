@@ -1,0 +1,7 @@
+Textures are rendered base on points with coordinates.
+
+This way we do not need to know if it's scaled, rotated, moved.
+We just follow 4 points(by default 4) with coordinates of each corner.
+
+This way it can be also nicely integrated with HTML and CSS, gaining all the benefits of all css transformations.
+We just need to read coordinates of each corner from HTML and pass those to creator.

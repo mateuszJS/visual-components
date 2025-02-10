@@ -1,0 +1,7 @@
+node_modules
+dist
+crate/bin
+crate/pkg
+crate/target
+crate/wasm-pack.log
+**/.DS_Store
