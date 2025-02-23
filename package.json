@@ -1,4 +1,8 @@
 {
+  "name": "@mateuszjs/visual-editor",
+  "description": "Initial version of visual editor",
+  "version": "0.0.1",
+  "author": "Mateusz Walendzik",
   "engines": {
     "node": ">=18.18.0"
   },
@@ -19,5 +23,15 @@
   },
   "dependencies": {
     "@wasm-tool/wasm-pack-plugin": "^1.7.0"
-  }
+  },
+  "main": "webpack.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mateuszJS/visual-editor.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mateuszJS/visual-editor/issues"
+  },
+  "homepage": "https://github.com/mateuszJS/visual-editor#readme",
 }
