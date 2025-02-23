@@ -1,0 +1,33 @@
+name: Release Package to npmjs
+on:
+  push:
+    branches:
+      - main
+      - next
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci
+      - run: npm run build
+      - run: npm audit singatures
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
