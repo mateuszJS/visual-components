@@ -1,1 +1,5 @@
-*Hello!*
+_Hello!_
+
+```bash
+npm install @mateuszjs/visual-components
+```
