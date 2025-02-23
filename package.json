@@ -35,5 +35,5 @@
     "url": "https://github.com/mateuszJS/visual-components/issues"
   },
   "homepage": "https://github.com/mateuszJS/visual-components#readme",
-  "files": ["dist", "README.md"]
+  "files": ["dist"]
 }
