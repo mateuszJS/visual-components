@@ -6,3 +6,4 @@ crate/target
 crate/wasm-pack.log
 **/.DS_Store
 .env
+.npmrc
