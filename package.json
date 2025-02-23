@@ -7,7 +7,8 @@
     "node": ">=18.18.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "start": "export NODE_ENV=development && webpack serve --open",
