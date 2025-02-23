@@ -1,4 +1,4 @@
-_Hello!_
+_Hello there!_
 
 ```bash
 npm install @mateuszjs/visual-components
