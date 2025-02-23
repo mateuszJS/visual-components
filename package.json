@@ -28,12 +28,12 @@
   "main": "webpack.config.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/mateuszJS/visual-editor.git"
+    "url": "git+ssh://git@github.com/mateuszJS/visual-components.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mateuszJS/visual-editor/issues"
+    "url": "https://github.com/mateuszJS/visual-components/issues"
   },
-  "homepage": "https://github.com/mateuszJS/visual-editor#readme",
+  "homepage": "https://github.com/mateuszJS/visual-components#readme",
   "files": ["dist", "README.md"]
 }
