@@ -1,7 +1,3 @@
-import mat4 from "utils/mat4";
-import captureStreamFromCanvas from "utils/captureCanvasStream";
-// import captureStreamFromCanvasWasm from "utils/captureCanvasStreamWasm";
-import vec3 from "utils/vec3";
 import getCanvasRenderDescriptor from "getCanvasRenderDescriptor";
 import { drawTexture } from "WebGPU/programs/initPrograms";
 import { State } from "../crate/pkg";
