@@ -11,13 +11,15 @@ test('visible image after upload', async ({ page }) => {
     const canvas = page.locator('canvas');
     await expect(canvas).toBeVisible()
 
-    const afterUploadScreenshot = await canvas.screenshot()
-  expect(afterUploadScreenshot).toMatchSnapshot('after-upload.png')
+    // const afterUploadScreenshot = await canvas.screenshot()
+  // expect(afterUploadScreenshot).toMatchSnapshot('after-upload.png')
+  await expect(canvas).toHaveScreenshot('after-upload-2.png')
 // npx playwright test --update-snapshots
   const moveImgBtn = page.locator('#img-position')
   await moveImgBtn.click()
-  const afterMoveScreenshot = await canvas.screenshot()
-  expect(afterMoveScreenshot).toMatchSnapshot('after-move.png')
+  await expect(canvas).toHaveScreenshot('after-move-2.png')
+  // const afterMoveScreenshot = await canvas.screenshot()
+  // expect(afterMoveScreenshot).toMatchSnapshot('after-move.png')
 
 });
 
