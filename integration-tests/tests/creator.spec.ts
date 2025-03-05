@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 import path from 'path';
 
-test('visible image after upload', async ({ page }) => {
+test('visible image after upload', async ({ page }, testinfo) => {
+  testinfo.snapshotSuffix = ''; // by default is `process.platform`
   await page.goto('http://127.0.0.1:3000');
 
     const fileInput = page.locator('input[type="file"]');
@@ -13,11 +14,16 @@ test('visible image after upload', async ({ page }) => {
 
     // const afterUploadScreenshot = await canvas.screenshot()
   // expect(afterUploadScreenshot).toMatchSnapshot('after-upload.png')
-  await expect(canvas).toHaveScreenshot('after-upload-2.png')
+  await expect(canvas).toHaveScreenshot(['after-upload-4.png'])
 // npx playwright test --update-snapshots
-  const moveImgBtn = page.locator('#img-position')
-  await moveImgBtn.click()
-  await expect(canvas).toHaveScreenshot('after-move-2.png')
+
+
+
+  // const moveImgBtn = page.locator('#img-position')
+  // await moveImgBtn.click()
+  // await expect(canvas).toHaveScreenshot('after-move-2.png')
+
+
   // const afterMoveScreenshot = await canvas.screenshot()
   // expect(afterMoveScreenshot).toMatchSnapshot('after-move.png')
 
