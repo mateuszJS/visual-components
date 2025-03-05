@@ -1,5 +1,5 @@
 _Hello there!_
 
 ```bash
-npm install @mateuszjs/visual-components
+npm i @mateuszjs/magic-render
 ```
