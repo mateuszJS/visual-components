@@ -12,9 +12,9 @@ test('visible image after upload', async ({ page }, testinfo) => {
     const canvas = page.locator('canvas');
     await expect(canvas).toBeVisible()
 
-    // const afterUploadScreenshot = await canvas.screenshot()
-  // expect(afterUploadScreenshot).toMatchSnapshot('after-upload.png')
-  await expect(canvas).toHaveScreenshot(['after-upload-4.png'])
+    const afterUploadScreenshot = await canvas.screenshot()
+  expect(afterUploadScreenshot).toMatchSnapshot('after-upload-5.png')
+  // await expect(canvas).toHaveScreenshot(['after-upload-4.png'])
 // npx playwright test --update-snapshots
 
 
