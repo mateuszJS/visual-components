@@ -6,7 +6,7 @@ test('visible image after upload', async ({ page }, testinfo) => {
     test.skip();
     return;
   }
-  
+
   testinfo.snapshotSuffix = ''; // by default is `process.platform`
   // and it produces different screenshot name base on operating system
   // while we want to make app consistent on all operating systems
@@ -15,22 +15,20 @@ test('visible image after upload', async ({ page }, testinfo) => {
   // await page.goto('https://webgpureport.org/');
   // await expect(page).toHaveScreenshot('webgpu-report.png');
 
+  await page.goto('http://127.0.0.1:3000')
 
-  await page.goto('http://127.0.0.1:3000');
+  const fileInput = page.locator('input[type="file"]');
+  const testImagePath = path.join(__dirname, '../image-sample.png');
+  await fileInput.setInputFiles(testImagePath);
 
-    const fileInput = page.locator('input[type="file"]');
-    const testImagePath = path.join(__dirname, '../image-sample.png');
-    await fileInput.setInputFiles(testImagePath);
+  const canvas = page.locator('canvas');
+  await expect(canvas).toBeVisible()
 
-    const canvas = page.locator('canvas');
-    await expect(canvas).toBeVisible()
-
-    await expect(canvas).toHaveScreenshot(['after-upload.png'])
+  await expect(canvas).toHaveScreenshot(['after-upload.png'])
 
   const moveImgBtn = page.locator('#img-position')
   await moveImgBtn.click()
   await expect(canvas).toHaveScreenshot('after-move.png')
-  
 });
 
 

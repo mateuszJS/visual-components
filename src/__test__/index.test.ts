@@ -1,7 +1,6 @@
 import initCreator from "../index"
 
 
-
 describe("Magic-render, does it", () => {
   beforeEach(() => {
     document.body.innerHTML = `

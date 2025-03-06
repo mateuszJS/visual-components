@@ -35,8 +35,6 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
   });
 
 
-
-
   return function renderDraw3dModelTexture(
     pass: GPURenderPassEncoder,
     matrix: Float32Array,

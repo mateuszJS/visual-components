@@ -12,7 +12,7 @@ async function test() {
 
     const img = new Image()
     img.src = URL.createObjectURL(files[0]);
-    img.onload = (e) => {
+    img.onload = () => {
       creator.addImage(img)
     };
   })
