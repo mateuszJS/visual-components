@@ -38,19 +38,6 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        launchOptions: {
-          // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
-          args: [
-            "--use-angle=swiftshader",  // This is the key flag for CPU rendering
-            "--enable-features=Vulkan,WebGPU",
-            "--enable-unsafe-webgpu",
-            "--disable-gpu-sandbox",
-            "--ignore-gpu-blocklist",
-            "--disable-vulkan-surface",
-            "--no-sandbox",
-            "--disable-dev-shm-usage",
-          ]
-        }
       },
     },
 
@@ -63,15 +50,6 @@ export default defineConfig({
     //   name: 'webkit',
     //   use: {
     //     ...devices['Desktop Safari'],
-    //     // launchOptions: {
-    //     //   // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
-    //     //   args: [
-    //     //     "--use-angle=vulkan",
-    //     //     "--enable-features=Vulkan",
-    //     //     "--disable-vulkan-surface",
-    //     //     "--enable-unsafe-webgpu",
-    //     //   ]
-    //     // }
     //   },
     // },
 
