@@ -34,30 +34,41 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: {
-    //     ...devices['Desktop Chrome'],
-    //     launchOptions: {
-    //       // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
-    //       args: [
-    //         "--use-angle=vulkan",
-    //         "--enable-features=Vulkan",
-    //         "--disable-vulkan-surface",
-    //         "--enable-unsafe-webgpu",
-    //       ]
-    //     }
-    //   },
-    // },
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        launchOptions: {
+          // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
+          args: [
+            "--use-angle=vulkan",
+            "--enable-features=Vulkan",
+            "--disable-vulkan-surface",
+            "--enable-unsafe-webgpu",
+          ]
+        }
+      },
+    },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: {
+        ...devices['Desktop Safari'],
+        launchOptions: {
+          // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
+          args: [
+            "--use-angle=vulkan",
+            "--enable-features=Vulkan",
+            "--disable-vulkan-surface",
+            "--enable-unsafe-webgpu",
+          ]
+        }
+      },
     },
 
     /* Test against mobile viewports. */

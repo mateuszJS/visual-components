@@ -3,6 +3,11 @@ import path from 'path';
 
 test('visible image after upload', async ({ page }, testinfo) => {
   testinfo.snapshotSuffix = ''; // by default is `process.platform`
+
+  await page.goto('https://webgpureport.org/');
+  await expect(page).toHaveScreenshot('webgpu-report.png');
+
+
   await page.goto('http://127.0.0.1:3000');
 
     const fileInput = page.locator('input[type="file"]');
@@ -13,7 +18,7 @@ test('visible image after upload', async ({ page }, testinfo) => {
     await expect(canvas).toBeVisible()
 
     const afterUploadScreenshot = await canvas.screenshot()
-  expect(afterUploadScreenshot).toMatchSnapshot('after-upload-5.png')
+    await expect(afterUploadScreenshot).toMatchSnapshot('after-upload-5.png')
   // await expect(canvas).toHaveScreenshot(['after-upload-4.png'])
 // npx playwright test --update-snapshots
 
