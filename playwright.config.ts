@@ -41,14 +41,14 @@ export default defineConfig({
         launchOptions: {
           // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
           args: [
-            "--use-angle=swiftshader",  // Use software rendering
+            "--use-angle=swiftshader",  // This is the key flag for CPU rendering
             "--enable-features=Vulkan,WebGPU",
-            "--disable-vulkan-surface",
             "--enable-unsafe-webgpu",
             "--disable-gpu-sandbox",
             "--ignore-gpu-blocklist",
-            "--no-sandbox",             // Required for CI environment
-            "--disable-dev-shm-usage", 
+            "--disable-vulkan-surface",
+            "--no-sandbox",
+            "--disable-dev-shm-usage",
           ]
         }
       },

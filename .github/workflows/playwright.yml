@@ -6,21 +6,25 @@ jobs:
   test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.42.1-focal
     steps:
       - uses: actions/checkout@v4
-      - name: Install Xvfb
-        run: sudo apt-get install -y xvfb
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
       - name: Install dependencies
         run: npm ci
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      # - name: Install Playwright Browsers
+      #   run: npx playwright install --with-deps
       # - name: Run Playwright tests
       #   run: npx playwright test
-      - name: Run Playwright tests with Xvfb
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npx playwright test
+      - name: Run Playwright tests with Xvfb and SwiftShader
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" \
+          npx playwright test --project=chromium
+        env:
+          PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH: "/usr/bin/google-chrome-stable"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
