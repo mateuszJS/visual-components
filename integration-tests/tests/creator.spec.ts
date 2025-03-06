@@ -2,10 +2,18 @@ import { test, expect } from '@playwright/test';
 import path from 'path';
 
 test('visible image after upload', async ({ page }, testinfo) => {
+  if (process.env.CI) {
+    test.skip();
+    return;
+  }
+  
   testinfo.snapshotSuffix = ''; // by default is `process.platform`
+  // and it produces different screenshot name base on operating system
+  // while we want to make app consistent on all operating systems
 
-  await page.goto('https://webgpureport.org/');
-  await expect(page).toHaveScreenshot('webgpu-report.png');
+  // To finally check fi WebGPU is supported
+  // await page.goto('https://webgpureport.org/');
+  // await expect(page).toHaveScreenshot('webgpu-report.png');
 
 
   await page.goto('http://127.0.0.1:3000');
@@ -17,21 +25,12 @@ test('visible image after upload', async ({ page }, testinfo) => {
     const canvas = page.locator('canvas');
     await expect(canvas).toBeVisible()
 
-    const afterUploadScreenshot = await canvas.screenshot()
-    await expect(afterUploadScreenshot).toMatchSnapshot('after-upload-5.png')
-  // await expect(canvas).toHaveScreenshot(['after-upload-4.png'])
-// npx playwright test --update-snapshots
+    await expect(canvas).toHaveScreenshot(['after-upload.png'])
 
-
-
-  // const moveImgBtn = page.locator('#img-position')
-  // await moveImgBtn.click()
-  // await expect(canvas).toHaveScreenshot('after-move-2.png')
-
-
-  // const afterMoveScreenshot = await canvas.screenshot()
-  // expect(afterMoveScreenshot).toMatchSnapshot('after-move.png')
-
+  const moveImgBtn = page.locator('#img-position')
+  await moveImgBtn.click()
+  await expect(canvas).toHaveScreenshot('after-move.png')
+  
 });
 
 

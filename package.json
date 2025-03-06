@@ -23,7 +23,7 @@
     "start": "export NODE_ENV=development && webpack serve --open",
     "build": "export $(grep -v '^#' .env | xargs) && export NODE_ENV=production && webpack",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "integration-tests": "npx playwright test"
+    "test-e2e": "npx playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.50.1",
