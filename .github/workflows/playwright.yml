@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Xvfb
+        run: sudo apt-get install -y xvfb
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
@@ -15,8 +17,10 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npx playwright test
+      # - name: Run Playwright tests
+      #   run: npx playwright test
+      - name: Run Playwright tests with Xvfb
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" npm run test
       - uses: actions/upload-artifact@v4
         if: always()
         with:
