@@ -3,12 +3,12 @@ import { drawTexture } from "WebGPU/programs/initPrograms";
 import { State } from "../crate/pkg";
 import getCanvasMatrix from "getCanvasMatrix";
 
-export let transformMatrix = new Float32Array()
+export const transformMatrix = new Float32Array()
 export const MAP_BACKGROUND_SCALE = 1000
 
-let stopRecording: VoidFunction | null = null
-let samples = 0
-let averageTime = 0
+const stopRecording: VoidFunction | null = null
+const samples = 0
+const averageTime = 0
 
 export default function runCreator(
   state: State,
@@ -18,7 +18,6 @@ export default function runCreator(
   presentationFormat: GPUTextureFormat,
   textures: GPUTexture[],
 ) {
-
 
 
   const matrix = getCanvasMatrix(canvas)

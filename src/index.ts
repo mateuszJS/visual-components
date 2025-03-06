@@ -10,7 +10,7 @@ interface CreatorAPI {
   updatePoints: (textureId: number, points: Point[]) => void
 }
 
-async function initCreator(
+export default async function initCreator(
   canvas: HTMLCanvasElement
 ): Promise<CreatorAPI> {
   /* setup WebGPU stuff */
@@ -80,37 +80,3 @@ function getDefaultTextureScale(img: HTMLImageElement, canvas: HTMLCanvasElement
   const width = clamp(img.width, canvas.width * 0.2, canvas.width * 0.8)
   return width / img.width
 }
-
-
-async function test() {
-  const canvas = document.querySelector<HTMLCanvasElement>("canvas")
-  if (!canvas) throw Error("Canvas has to be always provided")
-  
-  const creator = await initCreator(canvas)
-
-  const fileInput = document.querySelector<HTMLInputElement>('input')!
-  fileInput.addEventListener('change', (event) => {
-    const { files } = (event.target as HTMLInputElement);
-    if (!files) return;
-
-    const img = new Image()
-    img.src = URL.createObjectURL(files[0]);
-    img.onload = (e) => {
-      creator.addImage(img)
-
-      let offset = 100
-      setInterval(() => {
-        creator.updatePoints(0, [
-          { x: offset, y: offset },
-          { x: offset + 400, y: offset },
-          { x: offset + 400, y: offset + 400 },
-          { x: offset, y: offset + 400 },
-        ])
-        offset += 10
-      }, 100)
-    };
-  })
-
-}
-
-test()

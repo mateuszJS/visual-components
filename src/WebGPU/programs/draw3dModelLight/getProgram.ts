@@ -47,8 +47,6 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
   });
 
 
-
-
   return function renderDraw3dModelLight(
     pass: GPURenderPassEncoder,
     uniform: Uniforms,
@@ -105,7 +103,6 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
     usage: GPUBufferUsage.INDEX | GPUBufferUsage.COPY_DST,
   });
   device.queue.writeBuffer(indexBuffer, 0, indexData);
-
 
 
     pass.setPipeline(pipeline);

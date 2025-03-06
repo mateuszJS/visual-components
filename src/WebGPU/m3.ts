@@ -1,30 +1,28 @@
 
 const mat3 = {
-  fromMat4(m, dst = new Float32Array(12)) {
+  fromMat4(m: Float32Array, dst = new Float32Array(12)) {
     dst[0] = m[0]; dst[1] = m[1];  dst[ 2] = m[ 2];
     dst[4] = m[4]; dst[5] = m[5];  dst[ 6] = m[ 6];
     dst[8] = m[8]; dst[9] = m[9];  dst[10] = m[10];
 
     return dst;
   },
-  projection(width, height, dst) {
+  projection(width: number, height: number, dst = new Float32Array(12)) {
     // Note: This matrix flips the Y axis so that 0 is at the top.
-    dst = dst || new Float32Array(12);
     dst[0] = 2 / width;  dst[1] = 0;             dst[2] = 0;
     dst[4] = 0;          dst[5] = -2 / height;   dst[6] = 0;
     dst[8] = -1;         dst[9] = 1;             dst[10] = 1;
     return dst;
   },
 
-  identity(dst) {
-    dst = dst || new Float32Array(12);
+  identity(dst = new Float32Array(12)) {
     dst[0] = 1;  dst[1] = 0;  dst[2] = 0;
     dst[4] = 0;  dst[5] = 1;  dst[6] = 0;
     dst[8] = 0;  dst[9] = 0;  dst[10] = 1;
     return dst;
   },
 
-  multiply(a, b, dst) {
+  multiply(a: Float32Array, b: Float32Array, dst = new Float32Array(12)) {
     dst = dst || new Float32Array(12);
     const a00 = a[0 * 4 + 0];
     const a01 = a[0 * 4 + 1];
@@ -59,18 +57,17 @@ const mat3 = {
     return dst;
   },
 
-  translation([tx, ty], dst) {
-    dst = dst || new Float32Array(12);
+  translation([tx, ty]: [number, number], dst = new Float32Array(12)) {
     dst[0] = 1;   dst[1] = 0;   dst[2] = 0;
     dst[4] = 0;   dst[5] = 1;   dst[6] = 0;
     dst[8] = tx;  dst[9] = ty;  dst[10] = 1;
     return dst;
   },
 
-  rotation(angleInRadians, dst) {
+  rotation(angleInRadians: number, dst = new Float32Array(12)) {
     const c = Math.cos(angleInRadians);
     const s = Math.sin(angleInRadians);
-    dst = dst || new Float32Array(12);
+
     dst[0] = c;   dst[1] = s;  dst[2] = 0;
     dst[4] = -s;  dst[5] = c;  dst[6] = 0;
     dst[8] = 0;   dst[9] = 0;  dst[10] = 1;
@@ -78,23 +75,22 @@ const mat3 = {
 
   },
 
-  scaling([sx, sy], dst) {
-    dst = dst || new Float32Array(12);
+  scaling([sx, sy]: [number, number], dst = new Float32Array(12)) {
     dst[0] = sx;  dst[1] = 0;   dst[2] = 0;
     dst[4] = 0;   dst[5] = sy;  dst[6] = 0;
     dst[8] = 0;   dst[9] = 0;   dst[10] = 1;
     return dst;
   },
 
-  translate(m, translation, dst) {
+  translate(m: Float32Array, translation: [number, number], dst = new Float32Array(12)) {
     return mat3.multiply(m, mat3.translation(translation), dst);
   },
 
-  rotate(m, angleInRadians, dst) {
+  rotate(m: Float32Array, angleInRadians: number, dst = new Float32Array(12)) {
     return mat3.multiply(m, mat3.rotation(angleInRadians), dst);
   },
 
-  scale(m, scale, dst) {
+  scale(m: Float32Array, scale: [number, number], dst = new Float32Array(12)) {
     return mat3.multiply(m, mat3.scaling(scale), dst);
   },
 };

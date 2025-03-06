@@ -1,8 +1,7 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
-// const PuppeteerPrerenderPlugin = require('puppeteer-prerender-plugin').PuppeteerPrerenderPlugin
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -11,7 +10,14 @@ module.exports = {
 		asyncWebAssembly: true
 	},
   mode: process.env.NODE_ENV,
-  entry: ["./src/index.ts"],
+  entry: {
+    index: './src/index.ts',
+    integrationTest: {
+      runtime: 'test-runtime',
+      import: './integration-tests/index.ts',
+      filename: 'test.js'
+    }
+  },
   devtool: isProd ? undefined : "eval-source-map",
   watch: !isProd,
   devServer: {
@@ -59,14 +65,16 @@ module.exports = {
     so with deterministic module id, the order won't matter!! contenthash should stay the same*/
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "src/index.html"),
-    }),
-    isProd && new BundleAnalyzerPlugin({
-      analyzerMode: 'static' // 'server' had issue running along with PrerendererWebpackPlugin
-    }),
+    // isProd && !process.env.CI && new BundleAnalyzerPlugin({
+    //   analyzerMode: 'static' // 'server' had issue running along with PrerendererWebpackPlugin
+    // }),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "crate"),
+    }),
+    new HtmlWebpackPlugin({
+			template: path.resolve(__dirname, "integration-tests/template.html"),
+      inject: true,
+      chunks: ['integrationTest'],
     }),
   ],
 };

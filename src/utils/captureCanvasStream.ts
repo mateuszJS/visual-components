@@ -13,14 +13,14 @@ export default function captureStreamFromCanvas(canvasNode: HTMLCanvasElement) {
 }
 
 function finishCapturing(e: MediaRecorderEventMap["dataavailable"]) {
-  var videoData = [e.data];
+  const videoData = [e.data];
   // var blob = new Blob(videoData, { type: "video/mp4" });
   // var blob = new Blob(videoData, { type: "application/pdf" });
-  var blob = new Blob(videoData, { type: "video/webm" });
-  var blobURL = URL.createObjectURL(blob);
+  const blob = new Blob(videoData, { type: "video/webm" });
+  const blobURL = URL.createObjectURL(blob);
   // window.open(blobURL);
 
-    var a = document.createElement("a");
+    const a = document.createElement("a");
   document.body.appendChild(a);
   a.style.display = "none";
   a.href = blobURL;
