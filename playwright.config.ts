@@ -59,15 +59,15 @@ export default defineConfig({
       name: 'webkit',
       use: {
         ...devices['Desktop Safari'],
-        launchOptions: {
-          // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
-          args: [
-            "--use-angle=vulkan",
-            "--enable-features=Vulkan",
-            "--disable-vulkan-surface",
-            "--enable-unsafe-webgpu",
-          ]
-        }
+        // launchOptions: {
+        //   // https://blog.promaton.com/testing-3d-applications-with-playwright-on-gpu-1e9cfc8b54a9
+        //   args: [
+        //     "--use-angle=vulkan",
+        //     "--enable-features=Vulkan",
+        //     "--disable-vulkan-surface",
+        //     "--enable-unsafe-webgpu",
+        //   ]
+        // }
       },
     },
 
