@@ -1,3 +1,4 @@
+
 import { test, expect } from '@playwright/test'
 import path from 'path'
 
@@ -8,6 +9,7 @@ test('visible image after upload', async ({ page }, testinfo) => {
   }
 
   testinfo.snapshotSuffix = '' // by default is `process.platform`
+
   // and it produces different screenshot name base on operating system
   // while we want to make app consistent on all operating systems
 
@@ -22,6 +24,7 @@ test('visible image after upload', async ({ page }, testinfo) => {
   await fileInput.setInputFiles(testImagePath)
 
   const canvas = page.locator('canvas')
+
   await expect(canvas).toBeVisible()
 
   await expect(canvas).toHaveScreenshot(['after-upload.png'])

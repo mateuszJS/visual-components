@@ -104,7 +104,6 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
   })
   device.queue.writeBuffer(indexBuffer, 0, indexData)
 
-
     pass.setPipeline(pipeline)
     pass.setVertexBuffer(0, vertexBuffer)
     pass.setIndexBuffer(indexBuffer, 'uint32')

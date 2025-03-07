@@ -72,7 +72,6 @@ const mat3 = {
     dst[4] = -s;  dst[5] = c;  dst[6] = 0
     dst[8] = 0;   dst[9] = 0;  dst[10] = 1
     return dst
-
   },
 
   scaling([sx, sy]: [number, number], dst = new Float32Array(12)) {
