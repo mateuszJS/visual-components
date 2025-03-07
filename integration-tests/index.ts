@@ -7,14 +7,14 @@ async function test() {
 
   const fileInput = document.querySelector<HTMLInputElement>('input')!
   fileInput.addEventListener('change', (event) => {
-    const { files } = (event.target as HTMLInputElement);
-    if (!files) return;
+    const { files } = (event.target as HTMLInputElement)
+    if (!files) return
 
     const img = new Image()
-    img.src = URL.createObjectURL(files[0]);
+    img.src = URL.createObjectURL(files[0])
     img.onload = () => {
       creator.addImage(img)
-    };
+    }
   })
 
   let offset = 100

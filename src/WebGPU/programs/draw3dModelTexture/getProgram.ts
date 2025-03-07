@@ -4,7 +4,7 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
   const module = device.createShaderModule({
     label: "3d model texture shader module",
     code: shaderCode,
-  });
+  })
 
   const pipeline = device.createRenderPipeline({
     label: '3d model texture pipline',
@@ -32,7 +32,7 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
       depthCompare: 'always',
       format: 'depth24plus',
     },
-  });
+  })
 
 
   return function renderDraw3dModelTexture(
@@ -45,35 +45,35 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
     const sampler = device.createSampler({
       magFilter: "linear",
       minFilter: 'linear',
-    });
+    })
 
-    const uniformBufferSize = (16) * 4;
+    const uniformBufferSize = (16) * 4
     const uniformBuffer = device.createBuffer({
       label: 'uniforms',
       size: uniformBufferSize,
       usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-    });
+    })
 
-    const uniformValues = new Float32Array(uniformBufferSize / 4);
+    const uniformValues = new Float32Array(uniformBufferSize / 4)
 
     // offsets to the various uniform values in float32 indices
-    const kMatrixOffset = 0;
+    const kMatrixOffset = 0
 
-    const matrixValue = uniformValues.subarray(kMatrixOffset, kMatrixOffset + 16);
+    const matrixValue = uniformValues.subarray(kMatrixOffset, kMatrixOffset + 16)
 
     const numVertices = indexData.length
     const vertexBuffer = device.createBuffer({
       label: '3d model texture vertex buffer vertices',
       size: vertexData.byteLength,
       usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-    });
-    device.queue.writeBuffer(vertexBuffer, 0, vertexData);
+    })
+    device.queue.writeBuffer(vertexBuffer, 0, vertexData)
     const indexBuffer = device.createBuffer({
       label: '3d model texture index buffer',
       size: indexData.byteLength,
       usage: GPUBufferUsage.INDEX | GPUBufferUsage.COPY_DST,
-    });
-    device.queue.writeBuffer(indexBuffer, 0, indexData);
+    })
+    device.queue.writeBuffer(indexBuffer, 0, indexData)
 
     const bindGroup = device.createBindGroup({
       label: '3d model texture bind group for object',
@@ -83,17 +83,17 @@ export default function getProgram(device: GPUDevice, presentationFormat: GPUTex
         { binding: 1, resource: sampler },
         { binding: 2, resource: texture.createView() },
       ],
-    });
+    })
 
-    pass.setPipeline(pipeline);
-    pass.setVertexBuffer(0, vertexBuffer);
-    pass.setIndexBuffer(indexBuffer, 'uint32');
+    pass.setPipeline(pipeline)
+    pass.setVertexBuffer(0, vertexBuffer)
+    pass.setIndexBuffer(indexBuffer, 'uint32')
 
     matrixValue.set(matrix)
 
-    device.queue.writeBuffer(uniformBuffer, 0, uniformValues);
+    device.queue.writeBuffer(uniformBuffer, 0, uniformValues)
 
-    pass.setBindGroup(0, bindGroup);
-    pass.drawIndexed(numVertices);
+    pass.setBindGroup(0, bindGroup)
+    pass.drawIndexed(numVertices)
   }
 }

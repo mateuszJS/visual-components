@@ -1,7 +1,7 @@
-import getCanvasRenderDescriptor from "getCanvasRenderDescriptor";
-import { drawTexture } from "WebGPU/programs/initPrograms";
-import { State } from "../crate/pkg";
-import getCanvasMatrix from "getCanvasMatrix";
+import getCanvasRenderDescriptor from "getCanvasRenderDescriptor"
+import { drawTexture } from "WebGPU/programs/initPrograms"
+import { State } from "../crate/pkg"
+import getCanvasMatrix from "getCanvasMatrix"
 
 export const transformMatrix = new Float32Array()
 export const MAP_BACKGROUND_SCALE = 1000
@@ -43,12 +43,12 @@ export default function runCreator(
       }
 
       pass.end()
-      const commandBuffer = encoder.finish();
-      device.queue.submit([commandBuffer]);
+      const commandBuffer = encoder.finish()
+      device.queue.submit([commandBuffer])
     // }
 
-    requestAnimationFrame(draw);
+    requestAnimationFrame(draw)
   }
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(draw)
 }

@@ -1,4 +1,4 @@
-let depthTexture: GPUTexture | undefined;
+let depthTexture: GPUTexture | undefined
 
 export default function getRenderDescriptor(
   texture: GPUTexture,
@@ -10,13 +10,13 @@ export default function getRenderDescriptor(
     depthTexture.height !== texture.height
   ) {
     if (depthTexture) {
-      depthTexture.destroy();
+      depthTexture.destroy()
     }
     depthTexture = device.createTexture({
       size: [texture.width, texture.height],
       format: 'depth24plus',
       usage: GPUTextureUsage.RENDER_ATTACHMENT,
-    });
+    })
   }
   
   return {
@@ -36,5 +36,5 @@ export default function getRenderDescriptor(
       depthLoadOp: 'clear',
       depthStoreOp: 'store',
     } as const,
-  };
+  }
 }
