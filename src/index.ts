@@ -1,9 +1,10 @@
-import canvasSizeObserver from "WebGPU/canvasSizeObserver";
-import getDevice from "WebGPU/getDevice";
-import initPrograms from "WebGPU/programs/initPrograms";
-import runCreator from "run";
+import canvasSizeObserver from "WebGPU/canvasSizeObserver"
+import getDevice from "WebGPU/getDevice"
+import initPrograms from "WebGPU/programs/initPrograms"
+import runCreator from "run"
 import { createTextureFromSource } from 'WebGPU/getTexture'
-import clamp from "utils/clamp";
+import clamp from "utils/clamp"
+import { Point } from "types"
 
 interface CreatorAPI {
   addImage: (img: HTMLImageElement) => void
@@ -28,11 +29,11 @@ export default async function initCreator(
     format: presentationFormat,
     // Specify we want both RENDER_ATTACHMENT and COPY_SRC since we
     // will copy out of the swapchain texture.
-  });
+  })
 
   canvasSizeObserver(canvas, device, () => {
     // state.needsRefresh = true
-  });
+  })
 
   initPrograms(device, presentationFormat)
   const textures: GPUTexture[] = []

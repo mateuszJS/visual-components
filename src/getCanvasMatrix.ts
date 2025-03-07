@@ -1,4 +1,4 @@
-import mat4 from "utils/mat4";
+import mat4 from "utils/mat4"
 
 export default function getCanvasMatrix(canvas: HTMLCanvasElement) {
   const matrix = mat4.ortho(
@@ -8,7 +8,7 @@ export default function getCanvasMatrix(canvas: HTMLCanvasElement) {
     0,                   // top
     1,                 // near
     -1,                // far
-  );  
+  )  
 
   return matrix
 }

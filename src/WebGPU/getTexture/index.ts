@@ -1,5 +1,5 @@
-import createCheckedImageData from "./createCheckedImageData";
-import generateMipmapsArray from "./generateMimapsArray";
+import createCheckedImageData from "./createCheckedImageData"
+import generateMipmapsArray from "./generateMimapsArray"
 
 interface Options {
   mips?: boolean
@@ -15,9 +15,9 @@ type TextureSource =
 | OffscreenCanvas;
 
 const numMipLevels = (...sizes: number[]) => {
-  const maxSize = Math.max(...sizes);
-  return 1 + Math.log2(maxSize) | 0;
-};
+  const maxSize = Math.max(...sizes)
+  return 1 + Math.log2(maxSize) | 0
+}
 
 export interface TextureSlice {
   source: GPUCopyExternalImageSource
@@ -25,19 +25,19 @@ export interface TextureSlice {
 }
 
 function createCheckedMipmap(levels: Array<{ size: number, color: string }>) {
-  const ctx = document.createElement('canvas').getContext('2d', {willReadFrequently: true})!;
+  const ctx = document.createElement('canvas').getContext('2d', {willReadFrequently: true})!
 
   return levels.map(({size, color}, i) => {
-    ctx.canvas.width = size;
-    ctx.canvas.height = size;
-    ctx.fillStyle = i & 1 ? '#000' : '#fff';
-    ctx.fillRect(0, 0, size, size);
-    ctx.fillStyle = color;
-    ctx.fillRect(0, 0, size / 2, size / 2);
-    ctx.fillRect(size / 2, size / 2, size / 2, size / 2);
+    ctx.canvas.width = size
+    ctx.canvas.height = size
+    ctx.fillStyle = i & 1 ? '#000' : '#fff'
+    ctx.fillRect(0, 0, size, size)
+    ctx.fillStyle = color
+    ctx.fillRect(0, 0, size / 2, size / 2)
+    ctx.fillRect(size / 2, size / 2, size / 2, size / 2)
 
-    ctx.fillStyle = i & 1 ? '#FFFFFF' : '#000000';
-    ctx.font = `${size * 0.3}px serif`;
+    ctx.fillStyle = i & 1 ? '#FFFFFF' : '#000000'
+    ctx.font = `${size * 0.3}px serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ;[
@@ -46,13 +46,13 @@ function createCheckedMipmap(levels: Array<{ size: number, color: string }>) {
       { x: 0.75, y: 0.75 },
       { x: 0.75, y: 0.25 },
     ].forEach(p => {
-      ctx.fillText(i.toString(), p.x * size, p.y * size);
+      ctx.fillText(i.toString(), p.x * size, p.y * size)
     })
 
 
-    return ctx.getImageData(0, 0, size, size);
-  });
-};
+    return ctx.getImageData(0, 0, size, size)
+  })
+}
 
 export function createTextureArray(device: GPUDevice, width: number, height: number, slices: number) {
   return device.createTexture({
@@ -63,7 +63,7 @@ export function createTextureArray(device: GPUDevice, width: number, height: num
     usage: GPUTextureUsage.TEXTURE_BINDING |
            GPUTextureUsage.COPY_DST |
            GPUTextureUsage.RENDER_ATTACHMENT,
-  });
+  })
 }
 
 // adds texture ot texture array
@@ -80,7 +80,7 @@ export function attachSlice(
     { source },
     { texture: textue2dArray, origin: { z: sliceIndex }, mipLevel: 0 },
     { width, height },
-  );
+  )
 
   // if (texSlice.fakeMipmaps) {
   //   let mipLevel = 1, size = width
@@ -111,9 +111,9 @@ export function createTextureFromSource(device: GPUDevice, source: TextureSource
     usage: GPUTextureUsage.TEXTURE_BINDING |
            GPUTextureUsage.COPY_DST |
            GPUTextureUsage.RENDER_ATTACHMENT,
-  });
-  copySourceToTexture(device, texture, source, options);
-  return texture;
+  })
+  copySourceToTexture(device, texture, source, options)
+  return texture
 }
 
 function copySourceToTexture(device: GPUDevice, texture: GPUTexture, source: TextureSource, {flipY, depthOrArrayLayers}: Options = {}) {
@@ -124,7 +124,7 @@ function copySourceToTexture(device: GPUDevice, texture: GPUTexture, source: Tex
       // premultipliedAlpha: true
     },
     { width: source.width, height: source.height, depthOrArrayLayers },
-  );
+  )
 
   // if (texture.mipLevelCount > 1) {
   //   generateMipmaps(device, texture);
@@ -132,12 +132,12 @@ function copySourceToTexture(device: GPUDevice, texture: GPUTexture, source: Tex
 }
 
 export async function loadImageBitmap(url: string) {
-  const res = await fetch(url);
-  const blob = await res.blob();
-  return await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'premultiply' });
+  const res = await fetch(url)
+  const blob = await res.blob()
+  return await createImageBitmap(blob, { colorSpaceConversion: 'none', premultiplyAlpha: 'premultiply' })
 }
 
 export async function createTextureFromImage(device: GPUDevice, url: string, options: Options) {
-  const imgBitmap = await loadImageBitmap(url);
-  return createTextureFromSource(device, imgBitmap, options);
+  const imgBitmap = await loadImageBitmap(url)
+  return createTextureFromSource(device, imgBitmap, options)
 }

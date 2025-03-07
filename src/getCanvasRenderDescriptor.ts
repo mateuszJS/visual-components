@@ -1,8 +1,8 @@
-import getDepthTexture from "./getDepthTexture";
+import getDepthTexture from "./getDepthTexture"
 
 export default function getCanvasRenderDescriptor(context: GPUCanvasContext, device: GPUDevice) {
   // here we need to render that texture into canvas
-  const canvasTexture = context.getCurrentTexture();
+  const canvasTexture = context.getCurrentTexture()
   const depthTexture = getDepthTexture(device, canvasTexture.width, canvasTexture.height)
   const descriptor :GPURenderPassDescriptor = {
     // describe which textures we want to raw to and how use them

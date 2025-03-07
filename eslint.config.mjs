@@ -10,6 +10,7 @@ export default tseslint.config(
   {
     rules: {
       "no-multiple-empty-lines": "error",
+      "semi": ["error", "never"],
     },
     plugins: {
       "@stylistic/js": stylisticJs,

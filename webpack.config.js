@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
+  target: 'node',
   experiments: {
 		asyncWebAssembly: true
 	},
@@ -52,17 +53,16 @@ module.exports = {
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, "dist"),
-    clean: true,
+    libraryTarget: 'umd',  // Universal Module Definition
+    library: 'YourLibraryName',
+    globalObject: 'this', // Works in both browser and Node.js
+    clean: true
   },
-  optimization: {
-    // https://webpack.jakoblind.no/optimize/ suppose to give you suggestion how to improve build
-    runtimeChunk: "single", // split runtime code into a separate chunk using the
-    // looks like it's needed because each deployment, reach changes something
-    // so [contenthash] also gonna change each time
-    // it contains references to all modules, so changes in each deployment
 
-    moduleIds: 'deterministic', /* still some modules can change because order of improts has changed
-    so with deterministic module id, the order won't matter!! contenthash should stay the same*/
+  // Disable code splitting and runtime chunks
+  optimization: {
+    runtimeChunk: false,
+    splitChunks: false
   },
   plugins: [
     // isProd && !process.env.CI && new BundleAnalyzerPlugin({

@@ -10,12 +10,12 @@ export default function getProgram(
   const module = device.createShaderModule({
     label: 'texture module',
     code: shaderCode
-  });
+  })
 
   const sampler = device.createSampler({
     minFilter: 'linear',
     magFilter: 'linear',
-  });
+  })
 
   const pipeline = device.createRenderPipeline({
     label: 'texture pipeline',
@@ -58,20 +58,20 @@ export default function getProgram(
     //   depthCompare: 'less',
     //   format: 'depth24plus',
     // },
-  });
+  })
 
   const uniformBufferSize = (
     16/*projection matrix*/
-  ) * 4;
+  ) * 4
   const uniformBuffer = device.createBuffer({
     label: 'uniforms',
     size: uniformBufferSize,
     usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
-  });
+  })
 
-  const uniformValues = new Float32Array(uniformBufferSize / 4);
-  const kMatrixOffset = 0;
-  const matrixValue = uniformValues.subarray(kMatrixOffset, kMatrixOffset + 16);
+  const uniformValues = new Float32Array(uniformBufferSize / 4)
+  const kMatrixOffset = 0
+  const matrixValue = uniformValues.subarray(kMatrixOffset, kMatrixOffset + 16)
 
   return function drawTexture(
     pass: GPURenderPassEncoder,
@@ -86,8 +86,8 @@ export default function getProgram(
     label: 'vertex buffer vertices',
     size: vertexData.byteLength,
     usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-  });
-  device.queue.writeBuffer(vertexBuffer, 0, vertexData);
+  })
+  device.queue.writeBuffer(vertexBuffer, 0, vertexData)
 
 
   // bind group should be pre-created and reuse instead of constantly initialized
@@ -98,17 +98,17 @@ export default function getProgram(
       { binding: 1, resource: sampler },
       { binding: 2, resource: texture.createView() },
     ],
-  });
+  })
 
 
-    pass.setPipeline(pipeline);
+    pass.setPipeline(pipeline)
     pass.setVertexBuffer(0, vertexBuffer)
 
     matrixValue.set(worldProjectionMatrix)
 
-    device.queue.writeBuffer(uniformBuffer, 0, uniformValues);
+    device.queue.writeBuffer(uniformBuffer, 0, uniformValues)
 
-    pass.setBindGroup(0, bindGroup);
-    pass.draw(numVertices);
+    pass.setBindGroup(0, bindGroup)
+    pass.draw(numVertices)
   }
 }
