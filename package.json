@@ -10,7 +10,6 @@
     "access": "public",
     "provenance": true
   },
-  "typings": "./lib/main.d.ts",
   "release": {
     "branches": [
       "main",
