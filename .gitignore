@@ -1,5 +1,6 @@
 node_modules
-dist
+lib
+lib-test
 crate/bin
 crate/pkg
 crate/target
@@ -13,3 +14,7 @@ crate/wasm-pack.log
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# I have no clue why wasm-pack generates that file
+# pkg/index.js
+
