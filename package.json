@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "export NODE_ENV=development && webpack serve --open",
-    "build": "rm -rf lib lib-test && export $(grep -v '^#' .env | xargs) && export NODE_ENV=production && webpack && tsc --project tsconfig.build.json --emitDeclarationOnly ",
+    "build": "rm -rf lib lib-test && export $(grep -v '^#' .env | xargs) && export NODE_ENV=production && node build-wasm.mjs && webpack && tsc --project tsconfig.build.json --emitDeclarationOnly ",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test-e2e": "npx playwright test",
     "format": "eslint --fix \"src/**/*.{ts,js}\" \"integration-tests/**/*.{ts,js}\""
@@ -45,6 +45,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.26.0",
+    "wasm-pack": "^0.13.1",
     "webpack": "^5.97.1",
     "webpack-bundle-analyzer": "^4.10.2",
     "webpack-cli": "^6.0.1",
