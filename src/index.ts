@@ -5,19 +5,19 @@ import runCreator from "run"
 import { createTextureFromSource } from 'WebGPU/getTexture'
 import clamp from "utils/clamp"
 import { Point } from "types"
+import { State } from "../crate/glue_code"
 
-interface CreatorAPI {
+export interface CreatorAPI {
   addImage: (img: HTMLImageElement) => void
   updatePoints: (textureId: number, points: Point[]) => void
 }
 
 export default async function initCreator(
-  canvas: HTMLCanvasElement
+  canvas: HTMLCanvasElement,
 ): Promise<CreatorAPI> {
   /* setup WebGPU stuff */
   const device = await getDevice()
 
-  const { State } = await import("../crate/pkg/index.js")
   const state = State.new(300, 300)
 
   const context = canvas.getContext("webgpu")

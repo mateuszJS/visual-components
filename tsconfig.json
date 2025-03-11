@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "outDir": "./lib",
     "sourceMap": true,
     "module": "ESNext", // normally it would be es6, but because of dynamic import it need to be something modern
     "target": "es6",

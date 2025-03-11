@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "export NODE_ENV=development && webpack serve --open",
-    "build": "export $(grep -v '^#' .env | xargs) && export NODE_ENV=production && webpack && tsc --project tsconfig.build.json --emitDeclarationOnly ",
+    "build": "rm -rf lib lib-test && export $(grep -v '^#' .env | xargs) && export NODE_ENV=production && webpack && tsc --project tsconfig.build.json --emitDeclarationOnly ",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test-e2e": "npx playwright test",
     "format": "eslint --fix \"src/**/*.{ts,js}\" \"integration-tests/**/*.{ts,js}\""
@@ -33,6 +33,7 @@
     "@tsconfig/recommended": "^1.0.8",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.9",
+    "@wasm-tool/wasm-pack-plugin": "^1.7.0",
     "@webgpu/types": "^0.1.54",
     "eslint": "^9.21.0",
     "html-webpack-plugin": "^5.6.3",
@@ -49,12 +50,9 @@
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.0"
   },
-  "dependencies": {
-    "@wasm-tool/wasm-pack-plugin": "^1.7.0"
-  },
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "types": "./lib/types/src/index.d.ts",
+  "main": "./lib/index.mjs",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/mateuszJS/magic-render.git"
@@ -65,6 +63,6 @@
   },
   "homepage": "https://github.com/mateuszJS/magic-render#readme",
   "files": [
-    "dist/**/*"
+    "lib/**/*"
   ]
 }

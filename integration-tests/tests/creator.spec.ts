@@ -1,6 +1,9 @@
 
 import { test, expect } from '@playwright/test'
 import path from 'path'
+import { fileURLToPath } from "url"
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 test('visible image after upload', async ({ page }, testinfo) => {
   if (process.env.CI) {
@@ -17,7 +20,7 @@ test('visible image after upload', async ({ page }, testinfo) => {
   // await page.goto('https://webgpureport.org/');
   // await expect(page).toHaveScreenshot('webgpu-report.png');
 
-  await page.goto('http://127.0.0.1:3000')
+  await page.goto('/')
 
   const fileInput = page.locator('input[type="file"]')
   const testImagePath = path.join(__dirname, '../image-sample.png')

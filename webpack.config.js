@@ -1,37 +1,40 @@
-const path = require("path");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import { fileURLToPath } from "url"
+import path from "path"
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+import WasmPackPlugin from "@wasm-tool/wasm-pack-plugin" 
+// thanks to that plugin we don't need to make sure wasm-pack is installed
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const isProd = process.env.NODE_ENV === 'production'
 
-module.exports = {
-  target: 'node',
+// Base configuration shared between both formats
+const baseConfig = {
   experiments: {
-		asyncWebAssembly: true
+		asyncWebAssembly: true,
+    futureDefaults: true,
+    outputModule: true, // webpack will output ECMAScript module syntax whenever possible
 	},
   mode: process.env.NODE_ENV,
-  entry: {
-    index: './src/index.ts',
-    integrationTest: {
-      runtime: 'test-runtime',
-      import: './integration-tests/index.ts',
-      filename: 'test.js'
-    }
-  },
   devtool: isProd ? undefined : "eval-source-map",
   watch: !isProd,
-  devServer: {
-    // static: "./dist", // do not use it. It's gonna serve last SSG pages while dev mode
-    historyApiFallback: true // fallback to index.html while 404
+  devServer: { // HMR doesn't support ESM
+    hot: false, // and anyway with canvas we would need to perform reload
+    liveReload: true,
   },
   resolve: {
     extensions: [".ts", ".js", '.wasm', '.wgsl', '.jpg', '.png'],
     modules: [path.resolve(__dirname, "src"), "node_modules"],
-    /* useful with absolute imports, "src" dir now takes precedence over "node_modules",
-    otherwise you got an error:
-    Requests that start with a name are treated as module requests and resolve within module directories (node_modules).
-    */
+    /* useful with absolute imports, "src" dir now takes precedence over "node_modules" */
+  },
+  output: {
+    filename: '[name].mjs',  // Direct filename instead of [name].js
+    library: {
+      type: 'module',
+    },
+    chunkFormat: 'module',
+    chunkLoading: 'import',
+    module: true,
   },
   module: {
     rules: [
@@ -48,21 +51,18 @@ module.exports = {
         test: /\.(png|jpg)$/,
         type: "asset/resource",
       },
+      {
+        test: /\.wasm$/,
+        type: "asset/inline",
+      },
     ],
-  },
-  output: {
-    filename: '[name].[contenthash].js',
-    path: path.resolve(__dirname, "dist"),
-    libraryTarget: 'umd',  // Universal Module Definition
-    library: 'YourLibraryName',
-    globalObject: 'this', // Works in both browser and Node.js
-    clean: true
   },
 
   // Disable code splitting and runtime chunks
   optimization: {
     runtimeChunk: false,
-    splitChunks: false
+    splitChunks: false,
+    minimize: isProd
   },
   plugins: [
     // isProd && !process.env.CI && new BundleAnalyzerPlugin({
@@ -70,11 +70,40 @@ module.exports = {
     // }),
     new WasmPackPlugin({
       crateDirectory: path.resolve(__dirname, "crate"),
-    }),
-    new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, "integration-tests/template.html"),
-      inject: true,
-      chunks: ['integrationTest'],
+      forceMode: isProd ? 'production' : 'development',
+      outDir: path.resolve(__dirname, "crate", 'pkg'),
+      outName: 'index',
+      extraArgs: '--target bundler'
     }),
   ],
-};
+}
+
+const libConfig = {
+  ...baseConfig,
+  entry: { 'index': './src/index.ts' },
+  output: {
+    ...baseConfig.output,
+    path: path.resolve(__dirname, "lib"),
+  }
+}
+
+// Test config
+const testConfig = {
+  ...baseConfig,
+  entry: { 'integrationTest': './integration-tests/index.ts' },
+  output: {
+    ...baseConfig.output,
+    path: path.resolve(__dirname, "lib-test"),
+  },
+  plugins: [
+    ...baseConfig.plugins,
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "integration-tests/template.html"),
+      inject: true,
+      chunks: ['integrationTest'],
+      scriptLoading: "module",
+    }),
+  ],
+}
+
+export default isProd ? [libConfig, testConfig] : testConfig
