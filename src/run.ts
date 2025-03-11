@@ -1,6 +1,6 @@
 import getCanvasRenderDescriptor from "getCanvasRenderDescriptor"
 import { drawTexture } from "WebGPU/programs/initPrograms"
-import { type State } from "../crate/pkg"
+import { State } from "../crate/glue_code"
 import getCanvasMatrix from "getCanvasMatrix"
 
 export const transformMatrix = new Float32Array()
